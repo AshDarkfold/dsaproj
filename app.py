@@ -5,7 +5,6 @@ sys.setdefaultencoding('utf8')
 import imgtotxt
 import txttoimg
 from flask import Flask,render_template,request,redirect,send_from_directory,make_response
-from werkzeug import secure_filename
 app=Flask(__name__)
 s=dict()
 
@@ -17,7 +16,7 @@ def index():
 def upload_file():
 	if request.method=='POST':
 		f = request.files['fileToUpload']
-		imgname=secure_filename(f.filename)
+		imgname= f.filename
 		f.save(imgname)
 		imgtotxt.imgtotxt(imgname)
 		return render_template('index.html',u="Image Uploaded!",l="Upload Text")
@@ -52,7 +51,7 @@ def compress():
 def decom():
 	if request.method=='POST':
 		f = request.files['txtToUpload']
-		txtname=secure_filename(f.filename)
+		txtname=f.filename
 		f.save(txtname)
 		return render_template('index.html',u="Image Uploaded!",l="Text Uploaded!")
 
